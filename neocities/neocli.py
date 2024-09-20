@@ -108,10 +108,11 @@ def list(site):
 def push(dirc):
     """Push recursively directory to NeoCities site"""
     files = []
-    for root, dirs, dirfiles, in os.walk(dirc):
-        for name in dirfiles:
-            files.append((os.path.join(root, name),
-                          os.path.relpath(os.path.join(root, name), dirc)))
+    for dirpath, dirnames, filenames, in os.walk(dirc):
+        for name in filenames:
+            filepath = os.path.join(dirpath, name)
+            sitepath = os.path.relpath(filepath, dirc)
+            files.append((filepath, sitepath))
     for filename, dest in files:
         if os.path.splitext(filename)[1].lower() in supExt:
             nc.upload((filename, dest))
