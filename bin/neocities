@@ -1,0 +1,14 @@
+#!/bin/bash
+
+if [[ -z "$NEOCITIES_API_KEY" ]]; then
+    echo "You must set NEOCITIES_API_KEY before running this script."
+    echo
+    echo "Get your API key from"
+    echo "  https://neocities.org/settings/<username>#api_key"
+    exit 1
+fi
+
+APPDIR=$(realpath -s $(dirname $0)/..)
+export PYTHONPATH=$APPDIR${PYTHONPATH:+:$PYTHONPATH}
+
+$APPDIR/venv/bin/python3 -m neocities.neocli "$@"
